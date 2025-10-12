@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>법령 및 판례 검색</title>
+    <style>
+        body { font-family: Arial; margin: 30px; }
+        input[type="text"] { width: 400px; padding: 8px; }
+        button { padding: 8px 15px; }
+        .section-title { margin-top: 40px; font-weight: bold; font-size: 20px; }
+        .result { margin-top: 20px; border-bottom: 1px solid #ccc; padding: 10px 0; }
+        .law-name { font-weight: bold; color: #1a4e8a; }
+        .case-title { font-weight: bold; color: #8a1a1a; }
+        .article-num { color: #555; }
+    </style>
+</head>
+<body>
+    <h1>법령 및 판례 검색</h1>
+    <form method="get" action="/search/">
+        <input type="text" name="q" placeholder="예: 형법, 제1조, 대법원" value="{{ query }}">
+        <button type="submit">검색</button>
+    </form>
+
+    {% if query %}
+        <div class="section-title">📜 법령 검색 결과</div>
+        {% if law_results %}
+            {% for r in law_results %}
+                <div class="result">
+                    <div class="law-name">{{ r.law_name }}</div>
+                    <div class="article-num">{{ r.article_num }} {{ r.article_title }}</div>
+                    <div>{{ r.article_content|truncatechars:200 }}</div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>법령 검색 결과가 없습니다.</p>
+        {% endif %}
+
+        <div class="section-title">⚖️ 판례 검색 결과</div>
+        {% if case_results %}
+            {% for c in case_results %}
+                <div class="result">
+                    <div class="case-title">{{ c.title }}</div>
+                    <div>{{ c.summary|truncatechars:200 }}</div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>판례 검색 결과가 없습니다.</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
