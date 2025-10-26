@@ -1,3 +1,27 @@
+# Global tracking for all data-like files
 *.csv filter=lfs diff=lfs merge=lfs -text
 *.json filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
+
+# --- Data & Logs (법 데이터 관련)
+Code/law_data_new/data/**/*.csv filter=lfs diff=lfs merge=lfs -text
+Code/law_data_new/data/**/*.json filter=lfs diff=lfs merge=lfs -text
+Code/law_data_new/data/**/*.zip filter=lfs diff=lfs merge=lfs -text
+
+Code/law_data_new/logs/**/*.csv filter=lfs diff=lfs merge=lfs -text
+Code/law_data_new/logs/**/*.json filter=lfs diff=lfs merge=lfs -text
+Code/law_data_new/logs/**/*.zip filter=lfs diff=lfs merge=lfs -text
+
+# --- Processed / Raw Data
+Code/law_data_new/data/processed/**/*.csv filter=lfs diff=lfs merge=lfs -text
+Code/law_data_new/data/raw/**/*.csv filter=lfs diff=lfs merge=lfs -text
+
+# --- (Optional) AI 관련 대형 모델 파일 확장자 (필요 시)
+*.pt filter=lfs diff=lfs merge=lfs -text
+*.pkl filter=lfs diff=lfs merge=lfs -text
+
+# --- 일반 텍스트 및 코드 파일은 LFS에서 제외
+*.py text
+*.md text
+*.txt text
+*.env text
