@@ -1,0 +1,16 @@
+# --- Ignore dataset & cache ---
+Code/law_data_new/data/*
+Code/law_data_new/logs/*
+Code/law_data_new/**/*.zip
+Code/law_data_new/**/*.json
+Code/law_data_new/**/*.csv
+
+# --- Allow scripts and env ---
+!Code/law_data_new/scripts/
+!Code/law_data_new/.env
+
+# --- Common ignores ---
+*.sqlite3
+venv/
+__pycache__/
+.DS_Store
