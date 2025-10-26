@@ -14,3 +14,8 @@ Code/law_data_new/**/*.csv
 venv/
 __pycache__/
 .DS_Store
+
+# --- Allow LFS-tracked datasets ---
+!Code/law_data_new/data/processed/**
+!Code/law_data_new/data/raw/**
+!Code/law_data_new/logs/**
