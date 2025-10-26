@@ -3,7 +3,6 @@ Code/law_data_new/data/*
 Code/law_data_new/logs/*
 
 # --- Allow specific subfolders (so Git LFS can track them) ---
-!Code/law_data_new/data/
 !Code/law_data_new/data/processed/**
 !Code/law_data_new/data/raw/**
 !Code/law_data_new/logs/**
@@ -17,3 +16,4 @@ Code/law_data_new/logs/*
 venv/
 __pycache__/
 .DS_Store
+
