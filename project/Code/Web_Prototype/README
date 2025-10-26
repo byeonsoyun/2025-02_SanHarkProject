@@ -1,0 +1,30 @@
+프론트엔드 (React)
+
+홈 페이지, 챗봇 페이지, About Us 페이지 라우팅 완료
+
+Navbar, Footer, Scroll-to-top 버튼 UI 적용
+
+챗봇 UI 기본 구현
+
+사용자 입력창 + 전송 버튼
+
+메시지 표시: 사용자 메시지와 서버 응답 구분
+
+PDF 업로드 버튼 UI 구현 (React <input type="file"> + + 버튼)
+
+
+백엔드 (Django)
+
+기본 챗 메시지 API (/chat/api/chat/) 구현
+
+POST 요청으로 텍스트 메시지 전송 가능
+
+임시로 서버에서 받은 메시지 그대로 답장
+
+PDF 업로드 API (/chat/upload_pdf/) 구현
+
+업로드 성공 시 [PDF 전송] 파일명 형태로 JSON 응답 반환
+
+MEDIA_ROOT, MEDIA_URL 설정 완료
+
+URL 라우팅: 챗봇 관련 API 경로 연결 완료
