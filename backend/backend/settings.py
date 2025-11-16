@@ -29,8 +29,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "channels",
     "api",
-    "chat",  #새로 만든 chat 앱
-    'data.cases', # datacrawler 저시기
+    "chat",
+    "user_mgmt",  # Added user management app
 ]
 
 MIDDLEWARE = [
