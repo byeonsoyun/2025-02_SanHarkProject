@@ -1,45 +1,81 @@
 import json
-import pandas as pd
-import faiss
 import numpy as np
+import psycopg2 
+import os 
 from sentence_transformers import SentenceTransformer
-import pickle
+
+# ----------------------------------------------------------------------
+# 데이터 전처리 및 임베딩 담당 클래스
+# ----------------------------------------------------------------------
 
 class DataProcessor:
-    def __init__(self, model_name="all-MiniLM-L6-v2"):
+    # 최종 안정화 모델: jhgan/ko-sroberta-multitask (768차원)
+    VECTOR_DIMENSION = 768 
+
+    def __init__(self, model_name="jhgan/ko-sroberta-multitask"):
         self.embedding_model = SentenceTransformer(model_name)
         self.chunks = []
         self.embeddings = None
-        self.index = None
-    
-    def load_data(self, file_path):
-        """Load data from JSON or CSV file"""
-        if file_path.endswith('.json'):
-            with open(file_path, 'r') as f:
-                data = json.load(f)
-            return self._extract_text_from_json(data)
-        elif file_path.endswith('.csv'):
-            df = pd.read_csv(file_path)
-            return df.to_string()
-    
-    def _extract_text_from_json(self, data):
-        """Extract meaningful text from JSON"""
-        text_parts = []
-        if isinstance(data, dict):
-            for key, value in data.items():
-                if isinstance(value, (str, int, float)):
-                    text_parts.append(f"{key}: {value}")
-                elif isinstance(value, (dict, list)):
-                    text_parts.append(self._extract_text_from_json(value))
-        elif isinstance(data, list):
-            for item in data:
-                text_parts.append(self._extract_text_from_json(item))
-        else:
-            text_parts.append(str(data))
-        return " ".join(text_parts)
-    
+
+    # ----------------------------------------------------------------------
+    # 🟢 Load Data Directly from your PostgreSQL DB (chat_lawdocument)
+    # ----------------------------------------------------------------------
+    def load_data_from_db(self, db_config):
+        """
+        Loads raw text and metadata from the chat_lawdocument table.
+        """
+        documents = []
+        conn = None
+        
+        try:
+            conn = psycopg2.connect(**db_config)
+            cur = conn.cursor()
+            
+            # document_id, title, case_number, enforcement_date, law_article_no 필드를 메타데이터로 로드
+            cur.execute("""
+                SELECT 
+                    content,         
+                    document_id, 
+                    title, 
+                    case_number, 
+                    enforcement_date,
+                    law_article_no
+                FROM chat_lawdocument
+            """)
+            
+            for row in cur.fetchall():
+                content, doc_id, title, case_num, date, article_no = row
+                
+                metadata = {
+                    "document_id": doc_id,
+                    "title": title,
+                    "case_number": case_num,
+                    "enforcement_date": date,
+                    "law_article_no": article_no
+                }
+                
+                documents.append({
+                    'content': content,
+                    'metadata': metadata
+                })
+            
+            cur.close()
+            
+        except (Exception, psycopg2.Error) as error:
+            print(f"Error loading data from PostgreSQL: {error}")
+            raise # 오류를 던져서 인덱싱 프로세스를 중단시킵니다.
+        finally:
+            if conn:
+                conn.close()
+                
+        return documents
+
+    # ----------------------------------------------------------------------
+    # 🟢 Text Chunking Logic 
+    # ----------------------------------------------------------------------
     def chunk_text(self, text, chunk_size=500, overlap=50):
         """Split text into chunks with overlap"""
+        # 기존 로직 유지 (LangChain 대신 기본 split)
         words = text.split()
         chunks = []
         
@@ -49,33 +85,11 @@ class DataProcessor:
             
         return chunks
     
+    # ----------------------------------------------------------------------
+    # 🟢 Embedding Generation 
+    # ----------------------------------------------------------------------
     def create_embeddings(self, chunks):
         """Create embeddings for chunks"""
         self.chunks = chunks
-        self.embeddings = self.embedding_model.encode(chunks)
+        self.embeddings = self.embedding_model.encode(chunks, show_progress_bar=False)
         return self.embeddings
-    
-    def create_faiss_index(self):
-        """Create FAISS index from embeddings"""
-        dimension = self.embeddings.shape[1]
-        self.index = faiss.IndexFlatL2(dimension)
-        self.index.add(self.embeddings.astype('float32'))
-        return self.index
-    
-    def save_index(self, index_path="faiss_index.bin", chunks_path="chunks.pkl"):
-        """Save FAISS index and chunks"""
-        faiss.write_index(self.index, index_path)
-        with open(chunks_path, 'wb') as f:
-            pickle.dump(self.chunks, f)
-    
-    def load_index(self, index_path="faiss_index.bin", chunks_path="chunks.pkl"):
-        """Load FAISS index and chunks"""
-        self.index = faiss.read_index(index_path)
-        with open(chunks_path, 'rb') as f:
-            self.chunks = pickle.load(f)
-    
-    def search(self, query, k=3):
-        """Search for relevant chunks"""
-        query_embedding = self.embedding_model.encode([query])
-        distances, indices = self.index.search(query_embedding.astype('float32'), k)
-        return [self.chunks[i] for i in indices[0]]

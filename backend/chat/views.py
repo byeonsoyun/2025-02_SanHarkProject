@@ -29,39 +29,41 @@ def chat_message(request):
             
             # Enhanced complexity detection
             def needs_llm_analysis(question):
-                # Analytical keywords
-                analytical = ['어떤', '가장', '높은', '낮은', '비교', '분석', '왜', '어떻게', '차이', '설명', '해석', '의견', '판단', '방법', '기준', '요건', '범위']
-                # Question patterns (fixed patterns)
-                complex_patterns = ['에 대해', '관련해서', '의 경우', '라면', '할 때', '한다면', '에서는', '에 따라', '을 위해', '를 위해']
+                # Simple search indicators (should NOT use LLM)
+                simple_search = ['찾아줘', '찾아주세요', '검색', '알려줘', '알려주세요', '보여줘', '보여주세요', '있어?', '있나요']
+                
+                # Check if it's a simple search request
+                if any(kw in question for kw in simple_search):
+                    print(f"🔍 Question: {question}")
+                    print(f"   → Simple search request (no LLM)")
+                    return False
+                
+                # Analytical keywords requiring interpretation
+                analytical = ['가장', '높은', '낮은', '비교', '분석', '왜', '어떻게', '차이', '설명', '해석', '의견', '판단']
+                # Question patterns requiring reasoning
+                complex_patterns = ['에 대해', '의 경우', '이 경우', '라면', '할 때', '한다면']
                 # Legal reasoning keywords
-                legal_reasoning = ['판례', '근거', '법리', '해석', '적용', '검토', '의미', '취지', '원칙', '효력', '책임', '의무']
+                legal_reasoning = ['근거', '법리', '적용', '검토', '의미', '취지', '원칙', '효력']
                 # Context-dependent words
-                context_words = ['그럼', '그러면', '이 경우', '앞서', '위에서', '그것', '이것', '그런데', '또한', '하지만']
-                # Question words that indicate complexity
-                question_words = ['어떻게', '왜', '무엇', '언제', '어디서', '누가', '얼마나']
+                context_words = ['그럼', '그러면', '앞서', '위에서', '그것', '이것']
+                # Question words requiring explanation
+                question_words = ['어떻게', '왜', '무엇', '언제']
                 
-                question_lower = question.lower()
-                
-                # Check for multiple criteria
+                # Check for complexity indicators
                 has_analytical = any(kw in question for kw in analytical)
                 has_patterns = any(pattern in question for pattern in complex_patterns)
                 has_legal = any(kw in question for kw in legal_reasoning)
                 has_context = any(kw in question for kw in context_words)
                 has_question_words = any(kw in question for kw in question_words)
-                is_long = len(question) > 15  # Reduced threshold
-                has_multiple_concepts = question.count(' ') > 3  # Reduced threshold
-                ends_with_question = question.strip().endswith('?') or question.strip().endswith('요')
                 
                 # Debug output
                 print(f"🔍 Question: {question}")
                 print(f"   Analytical: {has_analytical}, Patterns: {has_patterns}, Legal: {has_legal}")
                 print(f"   Context: {has_context}, Question words: {has_question_words}")
-                print(f"   Long: {is_long}, Multiple concepts: {has_multiple_concepts}, Question format: {ends_with_question}")
                 
-                # More aggressive detection
-                is_complex = (has_analytical or has_patterns or has_legal or has_context or 
-                             has_question_words or (is_long and has_multiple_concepts) or
-                             (ends_with_question and len(question) > 10))
+                # Requires LLM only if has reasoning/interpretation needs
+                is_complex = (has_analytical or has_patterns or has_legal or 
+                             has_context or has_question_words)
                 
                 print(f"   → Complex: {is_complex}")
                 return is_complex

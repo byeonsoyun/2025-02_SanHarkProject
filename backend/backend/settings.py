@@ -1,7 +1,16 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Law API Configuration
+LAW_API_KEY = os.getenv('LAW_API_KEY', 'qusthdbs1')
+LAW_API_URL = "http://www.law.go.kr/DRC/lawService.do"
 
 
 # Quick-start development settings - unsuitable for production
@@ -70,8 +79,12 @@ ASGI_APPLICATION = "mysite.asgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'civil_law_db'),
+        'USER': os.getenv('DB_USER', 'law_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', '1111'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
