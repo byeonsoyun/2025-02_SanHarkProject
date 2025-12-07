@@ -1,7 +1,19 @@
-code/frontend/node_modules/
+# --- Ignore dataset & cache ---
+Code/law_data_new/data/*
+Code/law_data_new/logs/*
 
-logs/
+# --- Allow specific subfolders (so Git LFS can track them) ---
+!Code/law_data_new/data/processed/**
+!Code/law_data_new/data/raw/**
+!Code/law_data_new/logs/**
+
+# --- Allow scripts and env ---
+!Code/law_data_new/scripts/
+!Code/law_data_new/.env
+
+# --- Common ignores ---
+*.sqlite3
 venv/
-*.log
 __pycache__/
-*.pyc
+.DS_Store
+

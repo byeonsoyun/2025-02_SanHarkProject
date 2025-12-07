@@ -1,0 +1,20 @@
+/Users/sang/SanHark_CBNU/backend/venv/lib/python3.14/site-packages/django/db/backends/utils.py:98: RuntimeWarning: Accessing the database during app initialization is discouraged. To fix this warning, avoid executing queries in AppConfig.ready() or when your app modules are imported.
+  warnings.warn(self.APPS_NOT_READY_WARNING_MSG, category=RuntimeWarning)
+Watching for file changes with StatReloader
+Not Found: /main.7246c55004ad55148e5c.hot-update.json
+[06/Dec/2025 11:29:25] "GET /main.7246c55004ad55148e5c.hot-update.json HTTP/1.1" 404 2771
+Not Found: /api/
+[06/Dec/2025 11:29:32] "GET /api/ HTTP/1.1" 404 5338
+Not Found: /api/
+[06/Dec/2025 11:31:06] "GET /api/ HTTP/1.1" 404 5338
+[06/Dec/2025 11:44:09] "GET /api/calendar/google/status/?user_id=guest HTTP/1.1" 200 19
+[06/Dec/2025 11:44:09] "GET /api/calendar/events/?user_id=guest HTTP/1.1" 200 55164
+[06/Dec/2025 11:44:09] "GET /api/calendar/google/status/?user_id=guest HTTP/1.1" 200 19
+[06/Dec/2025 11:44:10] "GET /api/calendar/events/?user_id=guest HTTP/1.1" 200 55164
+[06/Dec/2025 11:44:14] "GET /api/calendar/events/?user_id=guest HTTP/1.1" 200 55164
+[06/Dec/2025 11:44:19] "GET /api/calendar/events/?user_id=guest HTTP/1.1" 200 55164
+[06/Dec/2025 11:44:24] "GET /api/calendar/events/?user_id=guest HTTP/1.1" 200 55164
+[06/Dec/2025 11:44:27] "GET /api/calendar/google/status/?user_id=guest HTTP/1.1" 200 19
+[06/Dec/2025 11:44:27] "GET /api/calendar/events/?user_id=guest HTTP/1.1" 200 55164
+[06/Dec/2025 11:44:27] "GET /api/calendar/google/status/?user_id=guest HTTP/1.1" 200 19
+[06/Dec/2025 11:44:27] "GET /api/calendar/events/?user_id=guest HTTP/1.1" 200 55164

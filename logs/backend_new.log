@@ -1,0 +1,126 @@
+/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/db/backends/utils.py:98: RuntimeWarning: Accessing the database during app initialization is discouraged. To fix this warning, avoid executing queries in AppConfig.ready() or when your app modules are imported.
+  warnings.warn(self.APPS_NOT_READY_WARNING_MSG, category=RuntimeWarning)
+=========================================================
+🌟 [DB 초기화] 서버 재시작 감지: 로그 백업 및 삭제 명령 호출...
+DB에 저장된 대화 로그가 없습니다. 백업/삭제 건너뛰기.
+Watching for file changes with StatReloader
+/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/chat/views.py changed, reloading.
+🌟 [DB 초기화] 백업/삭제 프로세스가 완료되었습니다.
+=========================================================
+Performing system checks...
+
+🔄 RAGService: 임베딩 모델(jhgan/ko-sroberta-multitask) 로딩 중...
+✅ 임베딩 모델 로드 완료.
+🔗 Ollama: http://10.198.138.249:22434/api/generate (모델: cbnu1)
+System check identified no issues (0 silenced).
+December 03, 2025 - 15:31:25
+Django version 5.0.6, using settings 'backend.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/db/backends/utils.py:98: RuntimeWarning: Accessing the database during app initialization is discouraged. To fix this warning, avoid executing queries in AppConfig.ready() or when your app modules are imported.
+  warnings.warn(self.APPS_NOT_READY_WARNING_MSG, category=RuntimeWarning)
+=========================================================
+🌟 [DB 초기화] 서버 재시작 감지: 로그 백업 및 삭제 명령 호출...
+DB에 저장된 대화 로그가 없습니다. 백업/삭제 건너뛰기.
+Watching for file changes with StatReloader
+/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/chat/views.py changed, reloading.
+🌟 [DB 초기화] 백업/삭제 프로세스가 완료되었습니다.
+=========================================================
+Performing system checks...
+
+🔄 RAGService: 임베딩 모델(jhgan/ko-sroberta-multitask) 로딩 중...
+✅ 임베딩 모델 로드 완료.
+🔗 Ollama: http://10.198.138.249:22434/api/generate (모델: cbnu1)
+System check identified no issues (0 silenced).
+December 03, 2025 - 15:32:25
+Django version 5.0.6, using settings 'backend.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/db/backends/utils.py:98: RuntimeWarning: Accessing the database during app initialization is discouraged. To fix this warning, avoid executing queries in AppConfig.ready() or when your app modules are imported.
+  warnings.warn(self.APPS_NOT_READY_WARNING_MSG, category=RuntimeWarning)
+=========================================================
+🌟 [DB 초기화] 서버 재시작 감지: 로그 백업 및 삭제 명령 호출...
+DB에 저장된 대화 로그가 없습니다. 백업/삭제 건너뛰기.
+Watching for file changes with StatReloader
+/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/chat/views.py changed, reloading.
+🌟 [DB 초기화] 백업/삭제 프로세스가 완료되었습니다.
+=========================================================
+Performing system checks...
+
+🔄 RAGService: 임베딩 모델(jhgan/ko-sroberta-multitask) 로딩 중...
+✅ 임베딩 모델 로드 완료.
+🔗 Ollama: http://10.198.138.249:22434/api/generate (모델: cbnu1)
+System check identified no issues (0 silenced).
+December 03, 2025 - 15:32:33
+Django version 5.0.6, using settings 'backend.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/db/backends/utils.py:98: RuntimeWarning: Accessing the database during app initialization is discouraged. To fix this warning, avoid executing queries in AppConfig.ready() or when your app modules are imported.
+  warnings.warn(self.APPS_NOT_READY_WARNING_MSG, category=RuntimeWarning)
+=========================================================
+🌟 [DB 초기화] 서버 재시작 감지: 로그 백업 및 삭제 명령 호출...
+DB에 저장된 대화 로그가 없습니다. 백업/삭제 건너뛰기.
+Watching for file changes with StatReloader
+/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/api/__init__.py changed, reloading.
+🌟 [DB 초기화] 백업/삭제 프로세스가 완료되었습니다.
+=========================================================
+Performing system checks...
+
+🔄 RAGService: 임베딩 모델(jhgan/ko-sroberta-multitask) 로딩 중...
+✅ 임베딩 모델 로드 완료.
+🔗 Ollama: http://10.198.138.249:22434/api/generate (모델: cbnu1)
+System check identified no issues (0 silenced).
+December 03, 2025 - 15:32:40
+Django version 5.0.6, using settings 'backend.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/db/backends/utils.py:98: RuntimeWarning: Accessing the database during app initialization is discouraged. To fix this warning, avoid executing queries in AppConfig.ready() or when your app modules are imported.
+  warnings.warn(self.APPS_NOT_READY_WARNING_MSG, category=RuntimeWarning)
+=========================================================
+🌟 [DB 초기화] 서버 재시작 감지: 로그 백업 및 삭제 명령 호출...
+DB에 저장된 대화 로그가 없습니다. 백업/삭제 건너뛰기.
+Watching for file changes with StatReloader
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/core/servers/basehttp.py", line 48, in get_internal_wsgi_application
+    return import_string(app_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/utils/module_loading.py", line 30, in import_string
+    return cached_import(module_path, class_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/utils/module_loading.py", line 15, in cached_import
+    module = import_module(module_path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'backend.wsgi'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/utils/autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+  File "/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/core/management/commands/runserver.py", line 139, in inner_run
+    handler = self.get_handler(*args, **options)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/contrib/staticfiles/management/commands/runserver.py", line 31, in get_handler
+    handler = super().get_handler(*args, **options)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/core/management/commands/runserver.py", line 78, in get_handler
+    return get_internal_wsgi_application()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sang/SanHark_CBNU/code/backend/cbnu_chatbot/backend/venv/lib/python3.11/site-packages/django/core/servers/basehttp.py", line 50, in get_internal_wsgi_application
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: WSGI application 'backend.wsgi.application' could not be loaded; Error importing module.

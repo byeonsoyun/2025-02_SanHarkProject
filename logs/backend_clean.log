@@ -1,0 +1,27 @@
+/Users/sang/SanHark_CBNU/backend/venv/lib/python3.14/site-packages/django/db/backends/utils.py:98: RuntimeWarning: Accessing the database during app initialization is discouraged. To fix this warning, avoid executing queries in AppConfig.ready() or when your app modules are imported.
+  warnings.warn(self.APPS_NOT_READY_WARNING_MSG, category=RuntimeWarning)
+Watching for file changes with StatReloader
+Method Not Allowed: /api/message/
+[05/Dec/2025 09:09:18] "GET /api/message/ HTTP/1.1" 405 33
+[05/Dec/2025 09:09:37] "GET /api/calendar/events/ HTTP/1.1" 200 53451
+[05/Dec/2025 09:09:45] "GET /api/calendar/events/ HTTP/1.1" 200 53451
+[05/Dec/2025 09:10:46] "GET /api/calendar/events/ HTTP/1.1" 200 53451
+[05/Dec/2025 09:10:46] "GET /api/calendar/events/ HTTP/1.1" 200 53451
+=========================================================
+🌟 [DB 초기화] 서버 재시작 감지: 로그 백업 및 삭제 명령 호출...
+DB에 저장된 대화 로그가 없습니다. 백업/삭제 건너뛰기.
+🌟 [DB 초기화] 백업/삭제 프로세스가 완료되었습니다.
+=========================================================
+Performing system checks...
+
+🔄 RAGService: 임베딩 모델(jhgan/ko-sroberta-multitask) 로딩 중...
+✅ 임베딩 모델 로드 완료.
+🔗 Ollama: http://10.198.138.249:22434/api/generate (모델: cbnu1)
+System check identified no issues (0 silenced).
+December 05, 2025 - 09:09:18
+Django version 6.0, using settings 'backend.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
