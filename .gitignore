@@ -1,19 +1,71 @@
-# --- Ignore dataset & cache ---
-Code/law_data_new/data/*
-Code/law_data_new/logs/*
-
-# --- Allow specific subfolders (so Git LFS can track them) ---
-!Code/law_data_new/data/processed/**
-!Code/law_data_new/data/raw/**
-!Code/law_data_new/logs/**
-
-# --- Allow scripts and env ---
-!Code/law_data_new/scripts/
-!Code/law_data_new/.env
-
-# --- Common ignores ---
-*.sqlite3
-venv/
+# Python
 __pycache__/
-.DS_Store
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
 
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Environment
+.env
+.env.local
+credentials.json
+token.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+
+# React
+/frontend/build
+/frontend/.env.local
+/frontend/.env.development.local
+/frontend/.env.test.local
+/frontend/.env.production.local
+
+# Logs
+logs/*.log
+*.log
+
+# Test files
+test_*.json
+1.txt
+dorm.txt
+
+# Scrapy
+.scrapy/
+
+# Faiss
+faiss_index_store/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
