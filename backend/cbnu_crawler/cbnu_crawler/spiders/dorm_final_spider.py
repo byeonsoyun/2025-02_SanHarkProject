@@ -208,32 +208,53 @@ class DormFinalSpider(scrapy.Spider):
         time.sleep(3)
         
         try:
-            body = self.driver.find_element(By.TAG_NAME, 'body')
-            text = body.text
-            lines = [l.strip() for l in text.split('\n') if l.strip()]
-            menu_lines = []
-            in_menu = False
+            # 테이블 형태로 식단 추출
+            tables = self.driver.find_elements(By.TAG_NAME, 'table')
+            menu_content = f"=== {name} 식단표 ===\n\n"
             
-            for line in lines:
-                if '요일' in line and '아침' in line:
-                    in_menu = True
-                if in_menu:
-                    if '원산지' in line or '시간표' in line:
-                        break
-                    if not any(skip in line for skip in ['로그인', '검색', '사이트맵', '알림마당', '메뉴열기']):
-                        menu_lines.append(line)
+            for table in tables:
+                try:
+                    rows = table.find_elements(By.TAG_NAME, 'tr')
+                    for row in rows:
+                        cells = row.find_elements(By.TAG_NAME, 'td')
+                        if not cells:
+                            cells = row.find_elements(By.TAG_NAME, 'th')
+                        
+                        if cells:
+                            row_text = ' | '.join([cell.text.strip() for cell in cells if cell.text.strip()])
+                            if row_text and len(row_text) > 3:
+                                menu_content += row_text + '\n'
+                except:
+                    continue
             
-            content = '\n'.join(menu_lines[:100]) if menu_lines else text[:1000]
+            # 테이블이 없으면 전체 텍스트에서 추출
+            if len(menu_content) < 100:
+                body = self.driver.find_element(By.TAG_NAME, 'body')
+                text = body.text
+                lines = [l.strip() for l in text.split('\n') if l.strip()]
+                menu_lines = [f"=== {name} 식단표 ===\n"]
+                in_menu = False
+                
+                for line in lines:
+                    if '요일' in line or '월' in line or '화' in line or '수' in line:
+                        in_menu = True
+                    if in_menu:
+                        if '원산지' in line or '시간표' in line or '급식' in line:
+                            break
+                        if not any(skip in line for skip in ['로그인', '검색', '사이트맵', '알림마당', '메뉴열기']):
+                            menu_lines.append(line)
+                
+                menu_content = '\n'.join(menu_lines[:100]) if len(menu_lines) > 1 else text[:1000]
             
             from cbnu_crawler.spiders.cbnu_notice_spider import ChbNoticeItem
             item = ChbNoticeItem()
             item['notice_id'] = f"dorm_menu_{name}_{datetime.now().strftime('%Y%m%d')}"
-            item['title'] = f'기숙사 식단표 - {name} ({datetime.now().strftime("%Y년 %m월 %주차")})'
-            item['content'] = content
+            item['title'] = f'기숙사 식단표 - {name}'
+            item['content'] = menu_content
             item['url'] = response.url
             item['post_date'] = datetime.now().date()
             item['board_type'] = '기숙사'
             yield item
-            self.logger.info(f"Scraped menu for {name}")
+            self.logger.info(f"Scraped menu for {name}: {len(menu_content)} chars")
         except Exception as e:
             self.logger.error(f"Error parsing menu {name}: {e}")

@@ -7,22 +7,20 @@ __pycache__/
 venv/
 env/
 ENV/
-*.egg-info/
-dist/
-build/
 
 # Django
+*.sqlite3
 *.log
 db.sqlite3
-db.sqlite3-journal
 media/
 staticfiles/
 
-# Environment
-.env
-.env.local
-credentials.json
-token.json
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
 # IDE
 .vscode/
@@ -35,37 +33,26 @@ token.json
 .DS_Store
 Thumbs.db
 
-# Node
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnp/
-.pnp.js
-
-# React
-/frontend/build
-/frontend/.env.local
-/frontend/.env.development.local
-/frontend/.env.test.local
-/frontend/.env.production.local
+# Environment
+.env
+.env.local
+.env.*.local
 
 # Logs
-logs/*.log
+logs/
 *.log
 
-# Test files
-test_*.json
-1.txt
-dorm.txt
+# Build
+build/
+dist/
+*.egg-info/
 
-# Scrapy
-.scrapy/
-
-# Faiss
-faiss_index_store/
+# Crawling results
+*.json
+!package.json
+!package-lock.json
 
 # Temporary files
 *.tmp
 *.bak
-*.swp
+*.backup

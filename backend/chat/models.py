@@ -1,48 +1,93 @@
-#DB연동1차_chat/models.py 파일 추가
-# chat/models.py 파일 내용
-
 from django.db import models
 from pgvector.django import VectorField
 
-# 2. 학습/검색 데이터: 확장형 법률 문서 통합 저장 (RAG 시스템의 지식 원천)
-class LawDocument(models.Model):
-    """
-    판례, 법령, 조례 등 모든 법률 문서를 통합하여 관리하는 모델.
-    RAG 시스템의 데이터 소스로 사용됩니다.
-    """
-    # ------------------ 확장성 핵심 필드 ------------------
-    # 문서의 유형을 구분: PRECEDENT(판례), LAW(법령), ORDINANCE(조례)
-    doc_type = models.CharField(
-        max_length=255, 
-        db_index=True, 
-        verbose_name="문서 유형"
-    )
-    # API에서 제공하는 각 문서의 고유 ID를 저장 (판례일련번호, 법령ID 등)
-    document_id = models.CharField(
-        max_length=255, 
-        unique=True, 
-        primary_key=True,
-        verbose_name="문서 고유 ID"
-    ) 
-    # -----------------------------------------------------
-    
-    title = models.CharField(max_length=512, verbose_name="문서 제목")
-    content = models.TextField(verbose_name="문서 본문 (청킹 및 임베딩 대상)")
-    
-    source_url = models.URLField(max_length=512, blank=True, null=True, verbose_name="출처 URL")
-    enforcement_date = models.CharField(max_length=255, verbose_name="시행/선고일자 (YYYYMMDD)")
-    added_date = models.DateTimeField(auto_now_add=True, verbose_name="추가일")
 
-    # 특화 필드 (유형별로 값이 비어있을 수 있음 - null=True, blank=True)
-    case_number = models.CharField(max_length=255, blank=True, null=True, verbose_name="사건번호")
-    court_name = models.CharField(max_length=255, blank=True, null=True, verbose_name="법원명")
-    law_article_no = models.CharField(max_length=255, blank=True, null=True, verbose_name="조항 번호")
-    vector = VectorField(dimensions=768, blank=True, null=True, verbose_name="문서 벡터 임베딩")
+class ChatMessage(models.Model):
+    """채팅 메시지"""
+    session_id = models.CharField(max_length=255, db_index=True, verbose_name='채팅 세션 ID')
+    user_id = models.CharField(max_length=255, db_index=True, verbose_name='사용자 ID')
+    timestamp = models.DateTimeField(auto_now_add=True, verbose_name='시간')
+    role = models.CharField(max_length=10, verbose_name='역할')  # user or assistant
+    content = models.TextField(verbose_name='메시지 내용')
+
     class Meta:
-        verbose_name = "통합 법률 문서"
-        verbose_name_plural = "통합 법률 문서 목록"
+        verbose_name = '채팅 메시지'
+        verbose_name_plural = '채팅 메시지 목록'
+        ordering = ['timestamp']
 
     def __str__(self):
-        return f"[{self.doc_type}] {self.title}"
-    
+        return f"[{self.role}] {self.content[:50]}"
 
+
+class ChbNotice(models.Model):
+    """충북대 공지사항"""
+    notice_id = models.CharField(max_length=255, primary_key=True, unique=True, verbose_name='공지사항 고유 ID')
+    board_type = models.CharField(max_length=100, db_index=True, verbose_name='게시판 종류')
+    title = models.CharField(max_length=512, verbose_name='제목')
+    content = models.TextField(verbose_name='본문 내용')
+    source_url = models.URLField(max_length=512, verbose_name='원본 URL')
+    post_date = models.DateField(verbose_name='게시일')
+    added_date = models.DateTimeField(auto_now_add=True, verbose_name='DB 추가일')
+    is_active = models.BooleanField(default=True, verbose_name='활성 상태')
+
+    class Meta:
+        verbose_name = '충북대 공지사항'
+        verbose_name_plural = '충북대 공지사항 목록'
+        ordering = ['-post_date']
+        db_table = 'chat_chbnotice'
+
+    def __str__(self):
+        return f"[{self.board_type}] {self.title}"
+
+
+class NoticeRagIndex(models.Model):
+    """공지사항 RAG 벡터 인덱스"""
+    notice = models.ForeignKey(ChbNotice, on_delete=models.CASCADE, related_name='rag_chunks', verbose_name='공지사항')
+    chunk_index = models.IntegerField(verbose_name='청크 인덱스')
+    text = models.TextField(verbose_name='청크 텍스트')
+    embedding = VectorField(dimensions=768, verbose_name='벡터 임베딩')
+
+    class Meta:
+        verbose_name = '공지사항 RAG 인덱스'
+        verbose_name_plural = '공지사항 RAG 인덱스 목록'
+        db_table = 'notice_rag_index_table'
+        unique_together = [['notice', 'chunk_index']]
+
+    def __str__(self):
+        return f"{self.notice.title} - Chunk {self.chunk_index}"
+
+
+class UserEvent(models.Model):
+    """사용자 일정"""
+    user_id = models.CharField(max_length=255, db_index=True, verbose_name='사용자 ID')
+    title = models.CharField(max_length=255, verbose_name='일정 제목')
+    start_date = models.DateField(verbose_name='시작일')
+    end_date = models.DateField(null=True, blank=True, verbose_name='종료일')
+    description = models.TextField(blank=True, verbose_name='설명')
+    google_event_id = models.CharField(max_length=255, null=True, blank=True, verbose_name='구글 캘린더 이벤트 ID')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='생성일')
+
+    class Meta:
+        verbose_name = '사용자 일정'
+        verbose_name_plural = '사용자 일정 목록'
+        ordering = ['-start_date']
+
+    def __str__(self):
+        return f"{self.user_id} - {self.title}"
+
+
+class GoogleCalendarToken(models.Model):
+    """구글 캘린더 토큰"""
+    user_id = models.CharField(max_length=255, unique=True, verbose_name='사용자 ID')
+    access_token = models.TextField(verbose_name='액세스 토큰')
+    refresh_token = models.TextField(null=True, blank=True, verbose_name='리프레시 토큰')
+    token_expiry = models.DateTimeField(verbose_name='토큰 만료일')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='생성일')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='수정일')
+
+    class Meta:
+        verbose_name = '구글 캘린더 토큰'
+        verbose_name_plural = '구글 캘린더 토큰 목록'
+
+    def __str__(self):
+        return f"Token for {self.user_id}"

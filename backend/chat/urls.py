@@ -1,8 +1,14 @@
 from django.urls import path
-from .views import chat_message, upload_pdf, upload_json_csv
+from . import views
 
 urlpatterns = [
-    path('api/chat/', chat_message, name='chat_message'),   # chat/ → chat_message 뷰
-    path('upload_pdf/', upload_pdf, name='upload_pdf'),     # PDF 업로드 엔드포인트
-    path('upload_data/', upload_json_csv, name='upload_data'), # JSON/CSV 업로드 엔드포인트
+    path('message/', views.chat_message, name='chat_message'),
+    path('events/', views.get_events, name='get_events'),
+    path('user-events/', views.add_event, name='add_event'),
+    path('user-events/<int:event_id>/', views.delete_event, name='delete_event'),
+    path('user-events/<int:event_id>/sync-google/', views.sync_to_google, name='sync_to_google'),
+    path('google/status/', views.google_status, name='google_status'),
+    path('google/auth/', views.google_auth, name='google_auth'),
+    path('google/callback/', views.google_callback, name='google_callback'),
+    path('google/disconnect/', views.google_disconnect, name='google_disconnect'),
 ]

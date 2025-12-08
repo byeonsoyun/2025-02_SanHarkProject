@@ -28,6 +28,7 @@ class GoogleCalendarService:
         auth_url, _ = flow.authorization_url(
             access_type='offline',
             include_granted_scopes='true',
+            prompt='consent',  # 항상 동의 화면 표시하여 refresh_token 받기
             state=user_id
         )
         return auth_url

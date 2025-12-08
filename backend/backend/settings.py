@@ -12,6 +12,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 LAW_API_KEY = os.getenv('LAW_API_KEY', 'qusthdbs1')
 LAW_API_URL = "http://www.law.go.kr/DRC/lawService.do"
 
+# LLM Configuration
+LLM_API_URL = os.getenv('LLM_API_URL', 'http://10.198.138.249:22434/api/generate')
+LLM_MODEL_NAME = os.getenv('LLM_MODEL_NAME', 'cbnu-rag-v2')
+
+# Google Calendar Configuration
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID', '')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET', '')
+GOOGLE_REDIRECT_URI = os.getenv('GOOGLE_REDIRECT_URI', 'http://localhost:8000/api/calendar/google/callback/')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
